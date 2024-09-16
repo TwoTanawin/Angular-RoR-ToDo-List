@@ -1,0 +1,18 @@
+services:
+  app_web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: todo_list_app
+    image: todo_list_app:0.1
+    command: bash -c "bundle exec rake db:create && bundle exec rake db:migrate && ./bin/rails server -b 0.0.0.0 -p 3000"
+    ports:
+      - "3000:3000"
+    networks:
+      - todo_list_network
+    volumes:
+      - ./:/rails
+
+networks:
+  todo_list_network:
+    external: true
